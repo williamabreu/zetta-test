@@ -1,4 +1,4 @@
-package net.williamabreu.zetta;
+package net.williamabreu.zetta.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
