@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.servingwebcontent;
+package net.williamabreu.zetta;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
