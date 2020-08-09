@@ -16,9 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class UserController {
@@ -71,7 +69,7 @@ public class UserController {
     @PostMapping("user/new")
     public String userSave(@RequestParam("cpf") String cpf, @RequestParam("name") String name,
                            @RequestParam("birthdate") String birthdate, @RequestParam("sex") char sex,
-                           @RequestParam("role") long roleId, @RequestParam("profile") List<Long> profiles) {
+                           @RequestParam("role") long roleId, @RequestParam("profile") Optional<String> profilesOpt) {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
         Date parsedBirthdate = null;
         try {
@@ -79,10 +77,21 @@ public class UserController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        List<Profile> userProfiles = new LinkedList<>();
-        for (long profileId : profiles) {
-            Profile p = profileRepository.findById(profileId);
-            if (p != null) userProfiles.add(p);
+        List<Profile> userProfiles = null;
+        String profiles = null;
+        try {
+            profiles = profilesOpt.get();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (profiles != null) {
+            List<String> profilesList = new ArrayList<>(Arrays.asList(profiles.split(",")));
+            userProfiles = new LinkedList<>();
+            for (String profileId : profilesList) {
+                Profile p = profileRepository.findById(Long.parseLong(profileId));
+                if (p != null) userProfiles.add(p);
+            }
         }
         Role role = roleRepository.findById(roleId);
         User user = new User(cpf, name, parsedBirthdate, sex, new Date(), userProfiles, role);
