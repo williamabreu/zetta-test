@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link type="text/css" rel="stylesheet" href="/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="/fontawesome.all.min.css" />
+    <title>Gerenciamento de Usuário</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 class="mt-5 text-right">
+                <a href="/"><button class="btn btn-primary"><i class="fas fa-home"></i> INÍCIO</button></a>
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <!-- TÍTULO -->
+            <h1 class="mt-2 text-left">Perfis</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="container">
+                <!-- CORPO -->
+                <table class="table table-hover mt-3">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome do perfil</th>
+                        <th>Ação</th>
+                    </tr>
+                    <tr th:each="profile : ${profileObjects}">
+                        <td th:text="${profile.id}" />
+                        <td th:text="${profile.name}" />
+                        <td><a th:href="${(#mvc.url('PC#profileEdit').arg(0, profile.id)).build()}"><i class="fas fa-edit"></i> Editar</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
