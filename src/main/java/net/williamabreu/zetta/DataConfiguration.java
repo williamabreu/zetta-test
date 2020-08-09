@@ -18,7 +18,7 @@ public class DataConfiguration {
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://192.168.56.13:3306/zetta_db");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/zetta_db");
         dataSource.setUsername("zetta");
         dataSource.setPassword("attez");
         return dataSource;
