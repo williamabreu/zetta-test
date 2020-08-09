@@ -64,6 +64,11 @@
                             </select>
 
                             <label class="col-form-label" for="profile">Perfil:</label>
+                            <!-- SÓ ESTÁ FUNCIONANDO PARA LISTAR, "/user/new" DANDO ERRO -->
+                            <!--/*
+                           <input th:if="${user} and ${user.profiles}" th:each="profile : ${user.profiles}" class="form-control" type="text" th:value="${profile.name}" readonly>
+                            */-->
+                            <input th:if="${user} and ${user.profiles}" th:each="profile : ${profileObjects}" class="form-control" type="text" value="TESTE" readonly>
                             <select multiple class="form-control" id="profile" name="profile">
                                 <option th:if="${user} and ${user.profile}" th:each="profile : ${profileObjects}" th:value="${profile.id}"
                                         th:text="${profile.name}" />
