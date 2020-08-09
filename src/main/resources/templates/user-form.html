@@ -30,7 +30,7 @@
                     <form class="mt-4" method="post">
                         <div class="form-group row">
                             <label th:if="${user}" class="col-form-label" for="registerDate">Data de cadastro:</label>
-                            <input th:if="${user}" class="form-control" id="registerDate" type="date" th:value="${user.registerDate}" readonly>
+                            <input th:if="${user}" class="form-control" id="registerDate" type="text" th:value="${user.registerDate}" readonly>
 
                             <label class="col-form-label" for="cpf">CPF:</label>
                             <input th:if="${user}" class="form-control" id="cpf" type="text" th:value="${user.cpf}" readonly>
@@ -41,7 +41,7 @@
                             <input th:unless="${user}" class="form-control" id="name" name="name" type="text">
 
                             <label class="col-form-label" for="birthdate">Data de nascimento:</label>
-                            <input th:if="${user}" class="form-control" id="birthdate" type="date" th:value="${user.birthdate}" readonly>
+                            <input th:if="${user}" class="form-control" id="birthdate" type="text" th:value="${user.birthdate}" readonly>
                             <input th:unless="${user}" class="form-control" id="birthdate" name="birthdate" type="date">
 
                             <label class="col-form-label" for="sex">Sexo:</label>
