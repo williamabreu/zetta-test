@@ -1,5 +1,6 @@
 package net.williamabreu.zetta.controllers;
 
+import net.williamabreu.zetta.models.Profile;
 import net.williamabreu.zetta.models.Role;
 import net.williamabreu.zetta.models.User;
 import net.williamabreu.zetta.repository.ProfileRepository;
@@ -16,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -58,15 +61,17 @@ public class UserController {
     @GetMapping("user/new")
     public ModelAndView userRegister() {
         Iterable<Role> roleObjects = roleRepository.findAll();
+        Iterable<Profile> profileObjects = profileRepository.findAll();
         ModelAndView modelView = new ModelAndView("user-form");
         modelView.addObject("roleObjects", roleObjects);
+        modelView.addObject("profileObjects", profileObjects);
         return modelView;
     }
 
     @PostMapping("user/new")
     public String userSave(@RequestParam("cpf") String cpf, @RequestParam("name") String name,
                            @RequestParam("birthdate") String birthdate, @RequestParam("sex") char sex,
-                           @RequestParam("role") long roleId) {
+                           @RequestParam("role") long roleId, @RequestParam("profile") List<Long> profiles) {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
         Date parsedBirthdate = null;
         try {
@@ -74,8 +79,13 @@ public class UserController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        List<Profile> userProfiles = new LinkedList<>();
+        for (long profileId : profiles) {
+            Profile p = profileRepository.findById(profileId);
+            if (p != null) userProfiles.add(p);
+        }
         Role role = roleRepository.findById(roleId);
-        User user = new User(cpf, name, parsedBirthdate, sex, new Date(), null, role);
+        User user = new User(cpf, name, parsedBirthdate, sex, new Date(), userProfiles, role);
         userRepository.save(user);
         return "redirect:/user/all";
     }
