@@ -30,7 +30,7 @@
                     <form class="mt-4" method="post">
                         <div class="form-group row">
                             <label th:if="${user}" class="col-form-label" for="registerDate">Data de cadastro:</label>
-                            <input th:if="${user}" class="form-control" id="registerDate" type="date" th:value="${user.registerdate}" readonly>
+                            <input th:if="${user}" class="form-control" id="registerDate" type="date" th:value="${user.registerDate}" readonly>
 
                             <label class="col-form-label" for="cpf">CPF:</label>
                             <input th:if="${user}" class="form-control" id="cpf" type="text" th:value="${user.cpf}" readonly>
@@ -49,6 +49,18 @@
                             <select th:unless="${user}" class="form-control" id="sex" name="sex">
                                 <option value="M">M</option>
                                 <option value="F">F</option>
+                            </select>
+
+                            <label class="col-form-label" for="role">Cargo:</label>
+                            <select class="form-control" id="role" name="role">
+                                <option th:if="${user} and ${user.role}" value="0">Nenhum</option>
+                                <option th:unless="${user} and ${user.role}" value="0" selected>Nenhum</option>
+                                <option th:if="${user} and ${user.role}" th:each="role : ${roleObjects}" th:value="${role.id}"
+                                th:text="${role.name}" th:selected="(${role.id} == ${user.role.id})"/>
+                                <option th:unless="${user}" th:each="role : ${roleObjects}" th:value="${role.id}"
+                                        th:text="${role.name}" />
+                                <option th:if="${user} and !${user.role}" th:each="role : ${roleObjects}" th:value="${role.id}"
+                                        th:text="${role.name}" />
                             </select>
                         </div>
                         <button class="btn btn-success" type="submit"><i class="far fa-save"></i> Salvar</button>
